@@ -14,10 +14,8 @@ class RobotStateMachine(object):
         with self.autonomous_drive:
             StateMachine.add('READY_TO_START', state.ReadyToStart(), transitions={'success': 'DETECT_BLOCKING_BAR'})
             StateMachine.add('DETECT_BLOCKING_BAR', state.DetectedBlockingBar(),
-                             transitions={'success': 'LINE_TRACE'})
-            StateMachine.add('LINE_TRACE', state.LineTrace(), transitions={'success': 'success'})
-            #StateMachine.add('DETECT_STOPLINE', state.DetectedStopLine(), transitions={'success': 'LINE_TRACE'})
-            #StateMachine.add('LINE_TRACE', state.LineTrace(), transitions={'success': 'success'})
+                             transitions={'success': 'success'})
+
             self.autonomous_drive.execute()
 
 
