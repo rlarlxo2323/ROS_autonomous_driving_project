@@ -6,11 +6,11 @@ import numpy as np
 from sensor_msgs.msg import Image
 
 
-class Leftcanny():
+class Leftcanny:
 
     def __init__(self):
         self.bridge = cv_bridge.CvBridge()
-        cv2.namedWindow("L", 1)
+        # cv2.namedWindow("Left Camera", 1)
         self.image_sub = rospy.Subscriber('my_left_camera/rgb/image_raw', Image, self.image_callback)
         self.lines = None
 
@@ -23,7 +23,7 @@ class Leftcanny():
         image_width = edge.shape[1]
 
         vertices = np.array([[(0, image_height), (0, image_height/2+40), ((int)(image_width-image_width/3),
-                            (int)(image_height/2)-40), ((int)(image_width-image_width/3), (int)(image_height))]])
+                            (int)(image_height/2)-45), ((int)(image_width-image_width/3), (int)(image_height))]])
 
         image_mask = np.zeros_like(edge)
         if len(edge.shape) > 2:
@@ -36,7 +36,6 @@ class Leftcanny():
 
         self.lines = cv2.HoughLinesP(roi_conversion, 1, np.pi / 180, 100, minLineLength=40, maxLineGap=5)
         left_fit = []
-        right_fit = []
         if self.lines is not None:
             for line in self.lines:
                 x1, y1, x2, y2 = line.reshape(4)
@@ -45,8 +44,6 @@ class Leftcanny():
                 intercept = parameter[1]
                 if slope < 0:
                     left_fit.append((slope, intercept))
-                else:
-                    right_fit.append((slope, intercept))
         else:
             pass
         left_fit_average = np.average(left_fit, axis=0)
@@ -69,13 +66,13 @@ class Leftcanny():
         if self.lines is not None:
             cv2.line(lines_image, (x1, y1), (x2, y2), (255, 0, 0), 10)
 
-        combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
-
-        cv2.imshow("L", combine_image)
-        cv2.waitKey(3)
+        # combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
+        # combine_image = cv2.polylines(combine_image, [vertices], True, (255, 0, 255), 3)
+        # cv2.imshow("Left Camera", combine_image)
+        # cv2.waitKey(3)
 
 
 if __name__ == '__main__':
-    rospy.init_node('follower')
+    rospy.init_node('follower_left')
     detector = Leftcanny()
     rospy.spin()

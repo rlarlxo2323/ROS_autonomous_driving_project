@@ -6,11 +6,11 @@ import numpy as np
 from sensor_msgs.msg import Image
 
 
-class Rightcanny():
+class Rightcanny:
 
     def __init__(self):
         self.bridge = cv_bridge.CvBridge()
-        cv2.namedWindow("R", 1)
+        # cv2.namedWindow("Right Camera", 1)
         self.image_sub = rospy.Subscriber('my_right_camera/rgb/image_raw', Image, self.image_callback)
         self.lines = None
 
@@ -22,12 +22,15 @@ class Rightcanny():
         image_height = edge.shape[0]
         image_width = edge.shape[1]
 
-        vertices = np.array([[(image_width/3, image_height), (image_width/3, image_height/2),
-                              (image_width, image_height/2-20), (image_width, image_height)]])
+        vertices = np.array([[(image_width/3, image_height), (image_width/3, image_height/2-40),
+                              (image_width, image_height/2+40), (image_width, image_height)]])
+
+        # vertices = np.array([[(image_width / 3, image_height), (image_width / 3, image_height / 2),
+        #                       (image_width, image_height / 2 - 20), (image_width, image_height)]])
 
         image_mask = np.zeros_like(edge)
         if len(edge.shape) > 2:
-            color = (255,255,255)
+            color = (255, 255, 255)
         else:
             color = 255
 
@@ -35,7 +38,6 @@ class Rightcanny():
         roi_conversion = cv2.bitwise_and(edge, image_mask)
 
         self.lines = cv2.HoughLinesP(roi_conversion, 1, np.pi / 180, 100, minLineLength=40, maxLineGap=5)
-        left_fit = []
         right_fit = []
         if self.lines is not None:
             for line in self.lines:
@@ -43,9 +45,7 @@ class Rightcanny():
                 parameter = np.polyfit((x1, x2), (y1, y2), 1)
                 slope = parameter[0]
                 intercept = parameter[1]
-                if slope < 0:
-                    left_fit.append((slope, intercept))
-                else:
+                if slope > 0:
                     right_fit.append((slope, intercept))
         else:
             pass
@@ -69,13 +69,13 @@ class Rightcanny():
         if self.lines is not None:
             cv2.line(lines_image, (x1, y1), (x2, y2), (255, 0, 0), 10)
 
-        combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
-
-        cv2.imshow("R", combine_image)
-        cv2.waitKey(3)
+        # combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
+        # combine_image = cv2.polylines(combine_image, [vertices], True, (255, 0, 255), 3)
+        # cv2.imshow("Right Camera", combine_image)
+        # cv2.waitKey(3)
 
 
 if __name__ == '__main__':
-    rospy.init_node('follower')
+    rospy.init_node('follower_right')
     detector = Rightcanny()
     rospy.spin()

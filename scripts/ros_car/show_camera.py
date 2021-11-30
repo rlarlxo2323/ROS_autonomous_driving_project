@@ -1,37 +1,57 @@
 #!/usr/bin/env python
+import numpy
+
 import rospy
 from sensor_msgs.msg import Image
 import cv2, cv_bridge
+import sys
 
 
-class Follower:
+class ScanImage:
     def __init__(self):
         self.bridge = cv_bridge.CvBridge()
-        cv2.namedWindow("L", 1)
-        self.image_sub = rospy.Subscriber('my_left_camera/rgb/image_raw', Image, self.image_callback_1)
+        self.image_sub = None
+        self.image = None
 
-        cv2.namedWindow("R", 3)
-        self.image_sub = rospy.Subscriber('my_right_camera/rgb/image_raw', Image, self.image_callback_3)
+    def direction_camera(self, direction):
+        if direction == 'front':
+            self.image_sub = rospy.Subscriber('camera/rgb/image_raw', Image, self.front_camera)
+        elif direction == 'left':
+            self.image_sub = rospy.Subscriber('my_left_camera/rgb/image_raw', Image, self.left_camera)
+        elif direction == 'right':
+            self.image_sub = rospy.Subscriber('my_right_camera/rgb/image_raw', Image, self.right_camera)
+        else:
+            print "No search camera"
+            sys.exit()
+        return self.image_sub, self.image
 
-        # cv2.namedWindow("window2", 2)
-        # self.image_sub = rospy.Subscriber('camera/rgb/image_raw', Image, self.image_callback_2)
-
-    def image_callback_1(self, msg):
-        image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        cv2.imshow("L", image)
+    def left_camera(self, msg):
+        self.image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        cv2.imshow("L", self.image)
         cv2.waitKey(3)
 
-    def image_callback_2(self, msg):
-        image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        cv2.imshow("window2", image)
+    def right_camera(self, msg):
+        self.image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        cv2.imshow("R", self.image)
         cv2.waitKey(3)
 
-    def image_callback_3(self, msg):
-        image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        cv2.imshow("R", image)
+    def front_camera(self, msg):
+        self.image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        # hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
+        # lower_white = numpy.array([0, 0, 200])
+        # upper_white = numpy.array([0, 0, 255])
+        # mask = cv2.inRange(hsv, lower_white, upper_white)
+        # h, w = mask.shape
+        # self.image[0: h - (h / 4), 0: w] = 0
+        # self.image[0:h, 0:w / 3] = 0
+        # self.image[0:h, w - (w / 3):w] = 0
+        cv2.imshow("M", self.image)
         cv2.waitKey(3)
 
 
-rospy.init_node('follower')
-follower = Follower()
+rospy.init_node('scan_image')
+scanner = ScanImage()
+argv_len = len(sys.argv[1:])
+for i in range(argv_len):
+    scanner.direction_camera(sys.argv[i+1])
 rospy.spin()

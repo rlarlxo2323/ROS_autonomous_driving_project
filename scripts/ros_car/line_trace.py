@@ -7,7 +7,7 @@ from right_canny import Rightcanny
 from left_canny import Leftcanny
 
 
-class Trace():
+class Trace:
     def __init__(self):
         self.right = Rightcanny()
         self.left = Leftcanny()
@@ -19,11 +19,11 @@ class Trace():
             self.drive_controller.set_velocity(0.5)
             self.drive_controller.set_angular(0)
         elif self.right.lines is None:
-            self.drive_controller.set_angular(-0.8)
-            self.drive_controller.set_velocity(0.4)
+            self.drive_controller.set_angular(-1.3)
+            self.drive_controller.set_velocity(0.5)
         elif self.left.lines is None:
-            self.drive_controller.set_angular(0.8)
-            self.drive_controller.set_velocity(0.4)
+            self.drive_controller.set_angular(1.3)
+            self.drive_controller.set_velocity(0.5)
         else:
             self.drive_controller.set_velocity(0.8)
             self.drive_controller.set_angular(0)
