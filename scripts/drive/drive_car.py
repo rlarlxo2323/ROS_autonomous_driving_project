@@ -90,7 +90,6 @@ class Find_obstacle(go_stop): # detect obstacle
 
     def scan_callback(self, msg):
         rospy.loginfo(msg.ranges[180])
-        #go_stop.drive(self, msg)
         if go_stop.driving_detect_obs:
             if 0 < msg.ranges[180] < 1.5:
                 rospy.loginfo("what")
@@ -108,10 +107,9 @@ class StopLine(go_stop): # detect stop line
     def __init__(self):
         self.bridge = cv_bridge.CvBridge()
         self.image_sub = rospy.Subscriber('camera/rgb/image_raw', Image, self.image_callback)
-        # detect stop line
         self.stopline_image_pub = rospy.Publisher('camera/rgb/image_raw/stopline', Image, queue_size=1)
         self.twist = Twist()
-        self.stopable = 0 # driving state
+        self.stopable = 0
         self.linecount = 0 # stop line count
 
     def image_callback(self, msg):

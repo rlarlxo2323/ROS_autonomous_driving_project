@@ -16,12 +16,12 @@ class Trace():
         self.rate = rospy.Rate(20)
 
     def go_line(self):
-        if self.stop.detect:
+        if self.stop.detect: # detect stopline
             self.drive_controller.set_velocity(0)
             rospy.loginfo('waiting for 3 second.....')
             rospy.sleep(3)
             self.drive_controller.set_velocity(1)
-        else:
+        else: # no detect
             self.drive_controller.set_velocity(1)
             
             if self.right.lines is None and self.left.lines is None:

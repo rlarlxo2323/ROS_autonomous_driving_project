@@ -3,7 +3,6 @@
 import rospy
 import state
 from smach import StateMachine
-import smach_ros
 
 
 class RobotStateMachine(object):
@@ -16,8 +15,6 @@ class RobotStateMachine(object):
             StateMachine.add('DETECT_BLOCKING_BAR', state.DetectedBlockingBar(),
                              transitions={'success': 'LINE_TRACE'})
             StateMachine.add('LINE_TRACE', state.LineTrace(), transitions={'success': 'success'})
-            #StateMachine.add('DETECT_STOPLINE', state.DetectedStopLine(), transitions={'success': 'LINE_TRACE'})
-            #StateMachine.add('LINE_TRACE', state.LineTrace(), transitions={'success': 'success'})
             self.autonomous_drive.execute()
 
 
