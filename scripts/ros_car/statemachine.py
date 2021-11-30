@@ -14,10 +14,11 @@ class RobotStateMachine(object):
             StateMachine.add('READY_TO_START', state.ReadyToStart(), transitions={'success': 'DETECT_BLOCKING_BAR'})
             StateMachine.add('DETECT_BLOCKING_BAR', state.DetectedBlockingBar(), transitions={'success': 'LINE_TRACE'})
             StateMachine.add('LINE_TRACE', state.LineTrace(),
-                             transitions={'detect_stop_line': 'DETECT_STOP_LINE', 'detect_stop_sign': 'DETECT_STOP_SIGN', 'detect_obstacle': 'DETECT_OBSTACLE', 'success': 'LINE_TRACE'})
+                             transitions={'detect_stop_line': 'DETECT_STOP_LINE', 'detect_stop_sign': 'DETECT_STOP_SIGN', 'detect_obstacle': 'DETECT_OBSTACLE', 'success': 'END'})
             StateMachine.add('DETECT_STOP_LINE', state.DetectedStopLine(), transitions={'success': 'LINE_TRACE'})
             StateMachine.add('DETECT_STOP_SIGN', state.DetectedStopSign(), transitions={'success': 'LINE_TRACE'})
             StateMachine.add('DETECT_OBSTACLE', state.DetectedObstacle(), transitions={'success': 'LINE_TRACE'})
+            StateMachine.add('END', state.End(), transitions={'success': 'success'})
 
             self.autonomous_drive.execute()
 

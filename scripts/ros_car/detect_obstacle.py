@@ -19,7 +19,7 @@ class DetectObstacle:
 
     def scan_callback(self, msg):
         # rospy.loginfo(msg.ranges[180])
-        if 1 < msg.ranges[180] < 2:
+        if 0 < msg.ranges[180] < 2:
             # rospy.loginfo("Detect_Obstacle")
             self.detect_obstacle = False
         else:

@@ -41,7 +41,8 @@ class LineTrace(State):
     def __init__(self):
         State.__init__(self, outcomes=['success', 'detect_stop_line', 'detect_stop_sign', 'detect_obstacle'])
         self.line_trace = Trace()
-        self.test = False
+        self.sign = 0
+        self.signBool = False
 
     def execute(self, ud):
         rospy.loginfo("line trace")
@@ -53,16 +54,18 @@ class LineTrace(State):
             self.line_trace.go_line()
             if detect_stop_line.detect:
                 return 'detect_stop_line'
-            elif detect_stop_sign.detect and not self.test:
+            elif detect_stop_sign.detect and self.sign == 0:
                 current_time = int(rospy.Time.now().to_sec())
-                target_time = current_time + 7
+                target_time = current_time + 6
                 while target_time > int(rospy.Time.now().to_sec()):
                     self.line_trace.go_line()
-                self.test = True
+                self.sign += 1
                 return 'detect_stop_sign'
-            elif not detect_obstacle.detect_obstacle and True:
+            elif not detect_obstacle.detect_obstacle and self.sign == 1:
+                self.signBool = True
                 return 'detect_obstacle'
-        return 'success'
+            elif detect_stop_sign and self.signBool:
+                return 'success'
 
 
 class DetectedStopLine(State):
@@ -114,3 +117,14 @@ class DetectedObstacle(State):
             if self.detect_obstacle.detect_obstacle:
                 return 'success'
 
+
+class End(State):
+    def __init__(self):
+        State.__init__(self, outcomes=['success'])
+        self.drive_controller = RobotDriveController()
+
+    def execute(self, ud):
+        rospy.loginfo("End Project")
+        self.drive_controller.set_velocity(0)
+        self.drive_controller.drive()
+        return 'success'
