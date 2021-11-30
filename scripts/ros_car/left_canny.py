@@ -27,7 +27,7 @@ class Leftcanny:
 
         image_mask = np.zeros_like(edge)
         if len(edge.shape) > 2:
-            color = (255,255,255)
+            color = (255, 255, 255) # white color
         else:
             color = 255
 

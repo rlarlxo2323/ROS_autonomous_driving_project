@@ -3,7 +3,6 @@
 import rospy
 import state
 from smach import StateMachine
-import smach_ros
 
 
 class RobotStateMachine(object):
