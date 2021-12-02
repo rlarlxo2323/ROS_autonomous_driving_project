@@ -22,11 +22,10 @@ class Rightcanny:
         image_height = edge.shape[0]
         image_width = edge.shape[1]
 
-        vertices = np.array([[(image_width/3, image_height), (image_width/3, image_height/2-40),
-                              (image_width, image_height/2+40), (image_width, image_height)]])
-
-        # vertices = np.array([[(image_width / 3, image_height), (image_width / 3, image_height / 2),
-        #                       (image_width, image_height / 2 - 20), (image_width, image_height)]])
+        vertices = np.array([[(image_width/3, image_height),
+                              (image_width/3, image_height / 2 - 50),
+                              (image_width, image_height / 2 + 30),
+                              (image_width, image_height)]])
 
         image_mask = np.zeros_like(edge)
         if len(edge.shape) > 2:

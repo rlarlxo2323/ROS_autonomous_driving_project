@@ -38,7 +38,7 @@ class StopLineDetector:
             if len(contours) <= 0:
                 return  # not found
             self.area = max(list(map(lambda x: cv2.contourArea(x), contours)))
-            if self.area > 7150:
+            if self.area > 7350:
                 self.detect = True
                 # print "===========detect================"
 
@@ -49,9 +49,9 @@ class StopLineDetector:
             if self.forward.slp == 0:
                 self.drive_controller.set_angular(0)
             elif self.forward.slp > 0:
-                self.drive_controller.set_angular(-0.5)
+                self.drive_controller.set_angular(-0.3)
             elif self.forward.slp < 0:
-                self.drive_controller.set_angular(0.5)
+                self.drive_controller.set_angular(0.3)
             else:
                 pass
             self.drive_controller.drive()

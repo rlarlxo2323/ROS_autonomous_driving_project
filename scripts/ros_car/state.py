@@ -55,10 +55,10 @@ class LineTrace(State):
             if detect_stop_line.detect:
                 return 'detect_stop_line'
             elif detect_stop_sign.detect and self.sign == 0:
-                current_time = int(rospy.Time.now().to_sec())
-                target_time = current_time + 6
-                while target_time > int(rospy.Time.now().to_sec()):
-                    self.line_trace.go_line()
+                # current_time = int(rospy.Time.now().to_sec())
+                # target_time = current_time + 7
+                # while target_time > int(rospy.Time.now().to_sec()):
+                self.line_trace.go_line()
                 self.sign += 1
                 return 'detect_stop_sign'
             elif not detect_obstacle.detect_obstacle and self.sign == 1:
@@ -85,10 +85,18 @@ class DetectedStopLine(State):
 
         if self.count == 4 or self.count == 6:
             current_time = int(rospy.Time.now().to_sec())
-            target_time = current_time + 3
+            target_time = current_time + 5
             while target_time > int(rospy.Time.now().to_sec()):
                 self.drive_controller.set_velocity(0.8)
                 self.drive_controller.drive()
+        elif self.count == 7:
+            self.drive_controller.set_angular(0.4)
+            self.drive_controller.drive()
+        current_time = int(rospy.Time.now().to_sec())
+        target_time = current_time + 1
+        while target_time > int(rospy.Time.now().to_sec()):
+            self.drive_controller.set_velocity(0.6)
+            self.drive_controller.drive()
 
         return 'success'
 
@@ -100,6 +108,8 @@ class DetectedStopSign(State):
 
     def execute(self, ud):
         rospy.loginfo("stop_sign detect")
+        self.drive_controller.set_angular(0)
+        self.drive_controller.drive()
         rospy.sleep(3)
         return 'success'
 

@@ -16,13 +16,13 @@ class Trace:
 
     def go_line(self):
         if self.right.lines is None and self.left.lines is None:
-            self.drive_controller.set_velocity(0.5)
+            self.drive_controller.set_velocity(0.3)
             self.drive_controller.set_angular(0)
         elif self.right.lines is None:
-            self.drive_controller.set_angular(-1.3)
+            self.drive_controller.set_angular(-1)
             self.drive_controller.set_velocity(0.5)
         elif self.left.lines is None:
-            self.drive_controller.set_angular(1.3)
+            self.drive_controller.set_angular(1)
             self.drive_controller.set_velocity(0.5)
         else:
             self.drive_controller.set_velocity(0.8)

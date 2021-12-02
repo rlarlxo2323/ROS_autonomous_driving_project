@@ -22,8 +22,10 @@ class Leftcanny:
         image_height = edge.shape[0]
         image_width = edge.shape[1]
 
-        vertices = np.array([[(0, image_height), (0, image_height/2+40), ((int)(image_width-image_width/3),
-                            (int)(image_height/2)-45), ((int)(image_width-image_width/3), (int)(image_height))]])
+        vertices = np.array([[(0, image_height),
+                              (0, image_height/2+30),
+                              (image_width-image_width/3, image_height/2-55),
+                              (image_width-image_width/3, image_height)]])
 
         image_mask = np.zeros_like(edge)
         if len(edge.shape) > 2:
@@ -65,6 +67,10 @@ class Leftcanny:
         lines_image = np.zeros_like(lanelines_image)
         if self.lines is not None:
             cv2.line(lines_image, (x1, y1), (x2, y2), (255, 0, 0), 10)
+
+        print type(self.lines)
+        print type(self.bridge)
+        print type(self.image_sub)
 
         # combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
         # combine_image = cv2.polylines(combine_image, [vertices], True, (255, 0, 255), 3)
