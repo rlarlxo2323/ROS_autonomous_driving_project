@@ -37,14 +37,6 @@ class ScanImage:
 
     def front_camera(self, msg):
         self.image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        # hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
-        # lower_white = numpy.array([0, 0, 200])
-        # upper_white = numpy.array([0, 0, 255])
-        # mask = cv2.inRange(hsv, lower_white, upper_white)
-        # h, w = mask.shape
-        # self.image[0: h - (h / 4), 0: w] = 0
-        # self.image[0:h, 0:w / 3] = 0
-        # self.image[0:h, w - (w / 3):w] = 0
         cv2.imshow("M", self.image)
         cv2.waitKey(3)
 

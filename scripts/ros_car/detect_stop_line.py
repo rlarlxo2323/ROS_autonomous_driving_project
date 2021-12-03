@@ -40,7 +40,6 @@ class StopLineDetector:
             self.area = max(list(map(lambda x: cv2.contourArea(x), contours)))
             if self.area > 7350:
                 self.detect = True
-                # print "===========detect================"
 
     def stop_line(self):
         if (self.forward.lines is not None) and (self.forward.slp != 1):

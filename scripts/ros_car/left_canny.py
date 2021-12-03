@@ -10,7 +10,6 @@ class Leftcanny:
 
     def __init__(self):
         self.bridge = cv_bridge.CvBridge()
-        # cv2.namedWindow("Left Camera", 1)
         self.image_sub = rospy.Subscriber('my_left_camera/rgb/image_raw', Image, self.image_callback)
         self.lines = None
 
@@ -67,15 +66,6 @@ class Leftcanny:
         lines_image = np.zeros_like(lanelines_image)
         if self.lines is not None:
             cv2.line(lines_image, (x1, y1), (x2, y2), (255, 0, 0), 10)
-
-        print type(self.lines)
-        print type(self.bridge)
-        print type(self.image_sub)
-
-        # combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
-        # combine_image = cv2.polylines(combine_image, [vertices], True, (255, 0, 255), 3)
-        # cv2.imshow("Left Camera", combine_image)
-        # cv2.waitKey(3)
 
 
 if __name__ == '__main__':

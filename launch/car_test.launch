@@ -2,7 +2,8 @@
   <arg name="base"      value="$(optenv TURTLEBOT_BASE kobuki)"/> <!-- create, roomba -->
   <arg name="gui" default="true"/>
   <arg name="stacks"    value="$(optenv TURTLEBOT_STACKS hexagons)"/>  <!-- circles, hexagons --> 
-  <arg name="3d_sensor" value="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro --> 
+  <arg name="3d_sensor" value="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro -->
+  <arg name="line" default=""/>
     
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="use_sim_time" value="true"/>
@@ -12,7 +13,7 @@
   </include>
 
 
-  <include file="$(find deu_car)/launch/$(arg base).launch.xml">
+  <include file="$(find deu_car)/launch/$(arg base)$(arg line).launch.xml">
     <arg name="base" value="kobuki"/>
     <arg name="stacks" value="hexagons"/>
     <arg name="3d_sensor" value="kinect"/>

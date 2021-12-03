@@ -55,16 +55,13 @@ class LineTrace(State):
             if detect_stop_line.detect:
                 return 'detect_stop_line'
             elif detect_stop_sign.detect and self.sign == 0:
-                # current_time = int(rospy.Time.now().to_sec())
-                # target_time = current_time + 7
-                # while target_time > int(rospy.Time.now().to_sec()):
                 self.line_trace.go_line()
                 self.sign += 1
                 return 'detect_stop_sign'
             elif not detect_obstacle.detect_obstacle and self.sign == 1:
                 self.signBool = True
                 return 'detect_obstacle'
-            elif detect_stop_sign and self.signBool:
+            elif detect_stop_sign.detect and self.signBool:
                 return 'success'
 
 

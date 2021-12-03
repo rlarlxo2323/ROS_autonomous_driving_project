@@ -2,10 +2,8 @@
 
 import cv2
 import numpy
-import numpy as np
 import cv_bridge
 import rospy
-from std_msgs.msg import Bool
 from sensor_msgs.msg import Image
 from drive_controller import RobotDriveController
 

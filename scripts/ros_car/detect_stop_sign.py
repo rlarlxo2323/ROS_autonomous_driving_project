@@ -29,7 +29,7 @@ class DetectStopSign:
         h, w = gray_img.shape
         block_bar_mask = gray_img
         block_bar_mask[0:h, 0: w - w/9] = 0
-        block_bar_mask[h/2:h, 0:w] = 0
+        block_bar_mask[h/3:h, 0:w] = 0
         block_bar_mask[0:h/10, 0:w] = 0
         block_bar_mask, self.contours, hierarchy = cv2.findContours(block_bar_mask, cv2.RETR_TREE,
                                                                     cv2.CHAIN_APPROX_SIMPLE)

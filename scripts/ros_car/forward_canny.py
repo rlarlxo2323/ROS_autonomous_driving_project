@@ -10,7 +10,6 @@ class Forwardcanny:
 
     def __init__(self):
         self.bridge = cv_bridge.CvBridge()
-        # cv2.namedWindow("M", 1)
         self.image_sub = rospy.Subscriber('camera/rgb/image_raw', Image, self.image_callback)
         self.lines = None
         self.slp = 1
@@ -61,10 +60,6 @@ class Forwardcanny:
             self.slp = 0
         else:
             self.slp = slope
-
-        # im = cv2.polylines(cv2_img, [vertices], True, 255, 1)
-        # cv2.imshow("M", im)
-        # cv2.waitKey(3)
 
 
 if __name__ == '__main__':
