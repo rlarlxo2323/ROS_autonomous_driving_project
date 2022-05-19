@@ -9,7 +9,6 @@
 4. [사용법](#4-사용법)
 5. [발표 영상](#5-발표-영상)
 6. [데모 영상](#6-데모-영상)
-7. [팀원](#7-팀원)
 
 ## 1. 배경
 
@@ -35,8 +34,9 @@
 ![차단바 인식](image/차단바인식.png)
 
 2. 정지선 인식 및 정지</br>
-Image에 대한 마스킹을 진행하여 정지선을 검출하고, 터틀봇을 3초간 정지시킨다.  <br/><br/>
-![정지선 인식](image/정지선검출.png)
+Image에 대한 마스킹을 진행하여 정지선을 검출하고, 터틀봇을 3초간 정지시킨다.  <br/>
+Canny 알고리즘을 사용하여 기울기가 0 이 될때까지 좌우로 움직여 수평을 맞춘다.<br/>
+![정지선 인식](image/정지선검출.PNG)
 
 3. 차선 인식 및 추적</br>
 Canny 알고리즘을 사용하여 차선을 인식하고, 인식되는 차선에 따라 주행 방향을 설정한다.  <br/><br/>
@@ -48,7 +48,7 @@ Canny 알고리즘을 사용하여 차선을 인식하고, 인식되는 차선�
 
 5. 장애물 인식 및 정지</br>
 LaserScan을 사용하여 전방에 장애물이 있는지 스캔하고, 인식되면 터틀봇을 정지시킨다.  <br/><br/>
-![장애물 인식](image/장애물.png)
+![장애물 인식](image/장애물인식.PNG)
 
 ## 4. 사용법
 
@@ -75,24 +75,8 @@ $ rosrun deu_car car_state_machine.py
 
 ## 5. 발표 영상
 
-[![발표 영상](http://img.youtube.com/vi/ZHMupwaDdGE/0.jpg)](https://youtu.be/ZHMupwaDdGE)
+[![발표 영상](https://img.youtube.com/vi/rXEB4ofZOt8)](https://youtu.be/rXEB4ofZOt8)
 
 ## 6. 데모 영상
 
-[![발표 영상](http://img.youtube.com/vi/Jb6omYSgUpM/0.jpg)](https://youtu.be/Jb6omYSgUpM)
-
-## 7. 팀원
-- 20173217 안대현
-- 20194152 허세진
-- 20173176 박진우
-- 20153294 김두영
-
-
-<a href="https://github.com/ads0070" title="20173217 안대현">
-<img src="https://avatars.githubusercontent.com/u/73926856?v=4" height="50" alt="안대현"/></a>
-
-<a href="https://github.com/Heosejin98" title="20194152 허세진">
-<img src="https://avatars.githubusercontent.com/u/61305083?v=4" height="50" alt="허세진"/></a>
-
-<a href="https://github.com/014787410"  title="20173176 박진우">
-<img src="https://avatars.githubusercontent.com/u/93768331?v=4" height="50" alt="박진우"/></a>
+[![데모 영상](https://img.youtube.com/vi/Jb6omYSgUpM)](https://youtu.be/I3JtWWx0EbM)
