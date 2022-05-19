@@ -75,8 +75,8 @@ $ rosrun deu_car car_state_machine.py
 
 ## 5. 발표 영상
 
-[![발표 영상](https://img.youtube.com/vi/rXEB4ofZOt8)](https://youtu.be/rXEB4ofZOt8)
+[![발표 영상](https://img.youtube.com/vi/rXEB4ofZOt8/0.jpg)](https://youtu.be/rXEB4ofZOt8)
 
 ## 6. 데모 영상
 
-[![데모 영상](https://img.youtube.com/vi/Jb6omYSgUpM)](https://youtu.be/I3JtWWx0EbM)
+[![데모 영상](https://img.youtube.com/vi/Jb6omYSgUpM/0.jpg)](https://youtu.be/I3JtWWx0EbM)
